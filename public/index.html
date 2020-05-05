@@ -16,5 +16,41 @@
         <input type="text" name="message" placeholder="Digite sua mensagem">
         <button type="submit">Enviar</button>
     </form>
+
+    <script type="text/javascript">
+        var socket = io('http://localhost:3000');
+
+        function renderMessage(message){
+            $('.messages').append('<div class="message"><strong>'+ message.author + '</strong>: ' + message.message + '</div>');
+        }
+
+        socket.on('previousMessages', function(message){
+            for(message of message){
+                renderMessage(message);
+            }
+        });
+
+        socket.on('receivedMessage', function(message){
+            renderMessage(message);
+        });
+
+        $('#chat').submit(function(event) {
+            event.preventDefault();
+
+            var author = $('input[name=username').val();
+            var message = $('input[name=message').val();
+
+            console.log(author, message);
+
+            if (author.length && message.length){
+                var messageObject = {
+                    author: author,
+                    message: message
+                };
+            }
+            renderMessage(messageObject);
+            socket.emit('sendMessage', messageObject);
+        })
+    </script>
 </body>
 </html>
