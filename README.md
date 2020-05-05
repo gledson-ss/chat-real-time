@@ -1,4 +1,4 @@
-# Chat_Real_time
+# Chat Real time
 ---
 *A simple communication application between several people at the same time, being able to exchange messages with other users who are connected on the same server*
 
